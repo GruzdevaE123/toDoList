@@ -1,0 +1,82 @@
+#to-do-app-content {
+    margin: 0px auto;
+    padding: 20px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+#to-do-list {
+    flex: 2;
+}
+
+#to-do-form {
+    display: flex;
+}
+
+#form-input {
+    display: flex;
+}
+
+.case {
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    outline: solid 1px white;
+}
+
+.case>* {
+    padding: 20px;
+}
+
+.case>div {
+    outline: solid 1px white;
+    width: 100%;
+}
+
+.color-box-container {
+    display: contents;
+}
+
+.color-box {
+    width: 15px;
+    height: 15px;
+    margin: auto 2px;
+    Border: none;
+    outline: none;
+}
+
+.color-box:focus {
+    border: 1px solid black;
+}
+
+form {
+    margin-top: 20px;
+    display: flex;
+    border: 1px solid #eaeaea;
+    border-radius: 5%;
+    padding: 10px;
+}
+
+input[type='text'] {
+    flex: 1;
+    Border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+input[type='checkbox'] {
+    margin: auto;
+    min-width: 10%;
+}
+
+button {
+    background-color: #26a59a;
+    color: white;
+    Border: none;
+    outline: none;
+    border-radius: 5%;
+    padding: 10px;
+    margin: 0px 10px;
+}
