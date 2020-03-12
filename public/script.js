@@ -3,7 +3,7 @@
     const FORM = document.getElementById("to-do-form");
     const INPUT = document.getElementById("to-do-input");
 
-    let curentColor;
+  
     const COLORS = [
         "#ef6e69",
         "#f279a2",
@@ -12,7 +12,7 @@
         "#67d7e5",
         "#ffe083"
     ];
-
+    let curentColor='';
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
@@ -40,27 +40,56 @@
         return checkBox
     }
 
-    function createNewCase(text) {
+    function createNewCase(color,text) {
         let newCase = document.createElement("div");
         newCase.className = "case";
-        let caseColor = curentColor === undefined || "" ?
-            COLORS[getRandomInt(COLORS.length)] :
-            curentColor;
+        let caseColor = color ===''?COLORS[getRandomInt(COLORS.length)]:color;
         newCase.style.background = caseColor
         TO_DO_LIST.append(newCase);
         newCase.prepend(createCheckBox(caseColor))
         let caseText = document.createElement('div')
         caseText.innerHTML = text
         newCase.append(caseText);
-        curentColor = COLORS[getRandomInt(COLORS.length)]
         return newCase;
     }
+    async function createTodo(todoText, todoColor) {
+        
+        let response = await fetch("/api/todos", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: JSON.stringify({
+            text: todoText,
+            color: todoColor
+          })
+        });
 
+        let todo = await response.json();
+        todo.text = todoText;
+        todo.color = todoColor;
+        
+
+      }
     FORM.onsubmit = () => {
         if (INPUT.value) {
-            createNewCase(INPUT.value);
+            createNewCase(curentColor,INPUT.value);
+            createTodo(INPUT.value,curentColor)
             INPUT.value = "";
+            curentColor =''
         }
         return false;
     };
+    (async function getTodos() {
+        
+        let response = await fetch("/api/todos", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          }
+        });
+        
+        let todos = await response.json();
+        todos.forEach(element => createNewCase(element.color,element.text))
+      })()
 })()
