@@ -50,6 +50,7 @@
         let caseText = document.createElement('div')
         caseText.innerHTML = text
         newCase.append(caseText);
+        curentColor = caseColor
         return newCase;
     }
     async function createTodo(todoText, todoColor) {
