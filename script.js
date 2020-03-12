@@ -1,10 +1,10 @@
-function app() {
-    let toDoList = document.getElementById("to-do-list");
-    let form = document.getElementById("to-do-form");
-    let input = document.getElementById("to-do-input");
+(function() {
+    const TO_DO_LIST = document.getElementById("to-do-list");
+    const FORM = document.getElementById("to-do-form");
+    const INPUT = document.getElementById("to-do-input");
 
-    let newCaseObj = {};
-    let colors = [
+    let curentColor;
+    const COLORS = [
         "#ef6e69",
         "#f279a2",
         "#9170cb",
@@ -23,47 +23,44 @@ function app() {
         colorBox.className = "color-box";
         colorBox.style.background = color;
         colorBox.addEventListener("click", () => {
-            newCaseObj.color = color;
+            curentColor = color;
         });
         return colorBox;
     }
-    let colorBoxes = colors.map(element => createColorBox(element));
-    colorBoxes.forEach(el => document.getElementsByClassName("color-box-container")[0].append(el));
+    COLORS.map(element => createColorBox(element)).forEach(el => document.getElementsByClassName("color-box-container")[0].append(el));
 
     function createCheckBox(color) {
         let checkBox = document.createElement("input");
         checkBox.type = "checkbox";
-        checkBox.addEventListener('change', () =>
+        checkBox.addEventListener('change', () => {
             checkBox.checked ?
-            (checkBox.parentNode.style.background = "gray") :
-            (checkBox.parentNode.style.background = color))
+                (checkBox.parentNode.style.background = "gray") :
+                (checkBox.parentNode.style.background = color)
+        })
         return checkBox
     }
 
-    function createNewCase(obj) {
+    function createNewCase(text) {
         let newCase = document.createElement("div");
         newCase.className = "case";
-        let caseColor = obj.color === undefined || "" ?
-            colors[getRandomInt(colors.length)] :
-            obj.color;
+        let caseColor = curentColor === undefined || "" ?
+            COLORS[getRandomInt(COLORS.length)] :
+            curentColor;
         newCase.style.background = caseColor
-        toDoList.append(newCase);
+        TO_DO_LIST.append(newCase);
         newCase.prepend(createCheckBox(caseColor))
         let caseText = document.createElement('div')
-        caseText.innerHTML = obj.caseName
+        caseText.innerHTML = text
         newCase.append(caseText);
-        obj.caseName = "";
-        obj.color = colors[getRandomInt(colors.length)]
+        curentColor = COLORS[getRandomInt(COLORS.length)]
         return newCase;
     }
 
-    form.onsubmit = () => {
-        if (input.value) {
-            newCaseObj.caseName = input.value;
-            input.value = "";
-            createNewCase(newCaseObj);
+    FORM.onsubmit = () => {
+        if (INPUT.value) {
+            createNewCase(INPUT.value);
+            INPUT.value = "";
         }
         return false;
     };
-}
-app();
+})()
