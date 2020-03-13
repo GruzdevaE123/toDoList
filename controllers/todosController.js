@@ -27,5 +27,4 @@ exports.postTodos = function(req, res) {
 
   data = JSON.stringify(todos);
   fs.writeFileSync("todos.json", data);
-  res.send(todo);
 };
