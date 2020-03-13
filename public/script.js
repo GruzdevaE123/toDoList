@@ -1,7 +1,7 @@
 (function() {
-  const TO_DO_LIST = document.getElementById("to-do-list");
-  const FORM = document.getElementById("to-do-form");
-  const INPUT = document.getElementById("to-do-input");
+  const toDoList = document.getElementById("to-do-list");
+  const form = document.getElementById("to-do-form");
+  const input = document.getElementById("to-do-input");
 
   const COLORS = [
     "#ef6e69",
@@ -46,9 +46,9 @@
   function createNewCase(color, text) {
     let newCase = document.createElement("div");
     newCase.className = "case";
-    let caseColor = color === "" ? COLORS[getRandomInt(COLORS.length)] : color;
+    let caseColor = color ? COLORS[getRandomInt(COLORS.length)] : color;
     newCase.style.background = caseColor;
-    TO_DO_LIST.append(newCase);
+    toDoList.append(newCase);
     newCase.prepend(createCheckBox(caseColor));
     let caseText = document.createElement("div");
     caseText.innerHTML = text;
@@ -68,11 +68,11 @@
       })
     });
   }
-  FORM.onsubmit = () => {
-    if (INPUT.value) {
-      createNewCase(curentColor, INPUT.value);
-      createTodo(INPUT.value, curentColor);
-      INPUT.value = "";
+  form.onsubmit = () => {
+    if (input.value) {
+      createNewCase(curentColor, input.value);
+      createTodo(input.value, curentColor);
+      input.value = "";
       curentColor = "";
     }
     return false;
